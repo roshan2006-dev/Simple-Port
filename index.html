@@ -91,7 +91,7 @@
       box-shadow: 0 0 80px rgba(212, 175, 55, 0.2);
     }
 
-    /* Canvas Background */
+    /* Canvas Background - WORKS ON MOBILE! */
     #bgCanvas {
       position: fixed;
       inset: 0;
@@ -99,6 +99,8 @@
       pointer-events: none;
       width: 100%;
       height: 100%;
+      display: block !important;
+      background: var(--obsidian);
     }
 
     /* Grain */
@@ -133,6 +135,7 @@
       justify-content: space-between;
       padding: 30px 5vw;
       backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       background: rgba(5, 5, 8, 0.7);
       border-bottom: 1px solid rgba(212, 175, 55, 0.05);
     }
@@ -235,6 +238,7 @@
       border: 1px solid rgba(212, 175, 55, 0.2);
       background: rgba(5, 5, 8, 0.8);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       font-family: var(--font-mono);
       font-size: 0.7rem;
       letter-spacing: 0.08em;
@@ -319,6 +323,7 @@
       padding: 20px 30px;
       border-radius: 16px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.03);
     }
     .hero-sub .highlight {
@@ -380,6 +385,7 @@
       color: var(--text-hi);
       background: rgba(5, 5, 8, 0.8);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .btn-ghost:hover {
       transform: translateY(-3px);
@@ -402,6 +408,7 @@
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .terminal-line::before {
       content: '$ ';
@@ -431,6 +438,7 @@
       padding: 12px 20px;
       border-radius: 999px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.03);
     }
     .scroll-line {
@@ -531,6 +539,7 @@
       background: rgba(5, 5, 8, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       overflow: hidden;
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -627,6 +636,7 @@
       background: rgba(5, 5, 8, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       transform-style: preserve-3d;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
@@ -710,6 +720,7 @@
       background: rgba(5, 5, 8, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       overflow: hidden;
       min-height: 380px;
       display: flex;
@@ -836,6 +847,7 @@
       background: rgba(5, 5, 8, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .timeline-item:hover .timeline-card {
@@ -875,6 +887,7 @@
       background: rgba(5, 5, 8, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       flex-wrap: wrap;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -975,7 +988,38 @@
       letter-spacing: 0.05em;
     }
 
-    /* Project image placeholders - using SVG */
+    /* Mobile Background - Beautiful animated gradient */
+    .mobile-bg {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .mobile-bg {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(135deg, #050508, #0a0a20, #1a0a2e, #050508);
+        background-size: 400% 400%;
+        animation: mobileGradient 15s ease infinite;
+        pointer-events: none;
+      }
+      @keyframes mobileGradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      #bgCanvas {
+        display: none !important;
+      }
+    }
+
     .project-img-placeholder {
       width: 100%;
       height: 100%;
@@ -992,6 +1036,9 @@
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
+  <!-- Mobile Background -->
+  <div class="mobile-bg"></div>
+  
   <canvas id="bgCanvas"></canvas>
   <div class="readability-overlay"></div>
   <div class="grain"></div>
@@ -999,7 +1046,7 @@
   <nav class="nav">
     <a href="#top" class="nav-mark">R<span class="dot">.</span></a>
     <div class="nav-links">
-      <a href="#trophies"> Awards</a>
+      <a href="#trophies">Awards</a>
       <a href="#skills">Stack</a>
       <a href="#projects">Projects</a>
       <a href="#timeline">Timeline</a>
@@ -1020,13 +1067,13 @@
       </h1>
 
       <p class="hero-sub">
-        <span class="highlight"> Java Developer</span> · Core Java · Spring Boot · Hibernate<br>
+        <span class="highlight">Java Developer</span> · Core Java · Spring Boot · Hibernate<br>
         <span class="mono">600+</span> DSA Problems · <span class="mono">3x</span> Hackathon Winner
       </p>
 
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View My Work</a>
-        <a href="#contact" class="btn btn-ghost">Let's Connect</a>
+        <a href="#contact" class="btn btn-ghost">Let's Talk</a>
       </div>
     </div>
 
@@ -1035,7 +1082,7 @@
     </div>
 
     <div class="scroll-indicator">
-    
+      <span>Explore</span>
       <div class="scroll-line"><div class="scroll-fill"></div></div>
     </div>
   </header>
@@ -1081,8 +1128,7 @@
 
     <section class="section" id="skills">
       <div class="section-head reveal">
-        <span class="eyebrow">⚡ Arsenal</span>
-        <h2>Tech Stack</h2>
+        <h2>Technical Skills</h2>
       </div>
 
       <div class="bento-skills">
@@ -1131,7 +1177,7 @@
 
     <section class="section" id="projects">
       <div class="section-head reveal">
-        <span class="eyebrow">🚀 Projects</span>
+        <span class="eyebrow">Projects</span>
         <h2>What I've <span class="gradient-text">Built</span></h2>
         <p class="section-desc">Real solutions for real problems.</p>
       </div>
@@ -1163,7 +1209,7 @@
           <div class="project-index">02</div>
           <div class="project-body">
             <div class="project-image">
-             <img src="OIP.webp" alt="">
+              <img src="OIP.webp" alt="">
             </div>
             <h3>Student Management</h3>
             <p class="project-tag">Full-Stack CRUD Engine</p>
@@ -1183,7 +1229,7 @@
 
     <section class="section" id="timeline">
       <div class="section-head reveal">
-        <span class="eyebrow"> Trajectory</span>
+        <span class="eyebrow">Trajectory</span>
         <h2>Certifications & <span class="gradient-text">Experience</span></h2>
         <p class="section-desc">Industry-validated. Then battle-tested on 600+ problems.</p>
       </div>
@@ -1194,7 +1240,7 @@
         <div class="timeline-item reveal" data-cursor-hover>
           <div class="timeline-node"></div>
           <div class="timeline-card">
-            <span class="timeline-org">🏦 JPMorgan Chase & Co.</span>
+            <span class="timeline-org">JPMorgan Chase & Co.</span>
             <h3>Software Engineering Job Simulation</h3>
             <p>Enterprise-scale backend tooling tasks in a real codebase.</p>
           </div>
@@ -1212,7 +1258,7 @@
         <div class="timeline-item reveal" data-cursor-hover>
           <div class="timeline-node"></div>
           <div class="timeline-card">
-            <span class="timeline-org">📚 Infosys SpringBoard</span>
+            <span class="timeline-org">Infosys SpringBoard</span>
             <h3>Enterprise Java Programming</h3>
             <p>Mastered enterprise Java patterns and best practices.</p>
           </div>
@@ -1221,7 +1267,7 @@
         <div class="timeline-item reveal" data-cursor-hover>
           <div class="timeline-node"></div>
           <div class="timeline-card">
-            <span class="timeline-org">💪 Problem Solving</span>
+            <span class="timeline-org">Problem Solving</span>
             <h3>600+ DSA Problems Solved</h3>
             <p>Consistent practice across competitive programming platforms.</p>
           </div>
@@ -1304,12 +1350,17 @@
         });
       }
 
-      // ========== 3D PARTICLE GALAXY (Three.js) ==========
-      if (!isTouch) {
+      // ========== MOBILE DETECTION ==========
+      const isMobile = window.innerWidth < 860;
+      
+      // ========== 3D PARTICLE GALAXY (Only on Desktop) ==========
+      if (!isTouch && !isMobile) {
         const script = document.createElement('script');
         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
         script.onload = () => {
           const canvas = document.getElementById('bgCanvas');
+          canvas.style.display = 'block';
+          
           const scene = new THREE.Scene();
           const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
           const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -1317,7 +1368,7 @@
           renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
           // Galaxy particles
-          const count = 2000;
+          const count = 1500;
           const positions = new Float32Array(count * 3);
           const colors = new Float32Array(count * 3);
 
@@ -1444,73 +1495,6 @@
           animate();
         };
         document.head.appendChild(script);
-      } else {
-        // Mobile fallback
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let w, h, particles;
-        const mouse = { x: -9999, y: -9999 };
-
-        function resize() {
-          w = canvas.width = window.innerWidth;
-          h = canvas.height = window.innerHeight;
-          const count = Math.min(80, Math.floor((w * h) / 25000));
-          particles = Array.from({ length: count }, () => ({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            r: Math.random() * 2 + 0.5
-          }));
-        }
-
-        function step() {
-          ctx.clearRect(0, 0, w, h);
-          for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            const dx = p.x - mouse.x;
-            const dy = p.y - mouse.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
-              const force = (120 - dist) / 120;
-              p.x += (dx / dist) * force * 1.5;
-              p.y += (dy / dist) * force * 1.5;
-            }
-            if (p.x < 0) p.x = w;
-            if (p.x > w) p.x = 0;
-            if (p.y < 0) p.y = h;
-            if (p.y > h) p.y = 0;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${40 + Math.random() * 20}, 80%, 60%, 0.2)`;
-            ctx.fill();
-            for (let j = i + 1; j < particles.length; j++) {
-              const q = particles[j];
-              const ddx = p.x - q.x;
-              const ddy = p.y - q.y;
-              const d = Math.sqrt(ddx * ddx + ddy * ddy);
-              if (d < 120) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(q.x, q.y);
-                ctx.strokeStyle = `rgba(139,92,246,${0.04 * (1 - d / 120)})`;
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-              }
-            }
-          }
-          requestAnimationFrame(step);
-        }
-
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX;
-          mouse.y = e.clientY; });
-        window.addEventListener('mouseleave', () => { mouse.x = -9999;
-          mouse.y = -9999; });
-        resize();
-        step();
       }
 
       // ========== SCROLL REVEALS ==========
@@ -1549,7 +1533,7 @@
       }, { threshold: 0.5 });
       counters.forEach((c) => counterObserver.observe(c));
 
-      // ========== SKILL BOX TILT ==========
+      // ========== SKILL BOX TILT (Desktop only) ==========
       if (!isTouch) {
         document.querySelectorAll('.skill-box').forEach((box) => {
           box.addEventListener('mousemove', (e) => {
